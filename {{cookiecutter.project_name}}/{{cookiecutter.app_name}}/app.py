@@ -7,7 +7,7 @@ from {{cookiecutter.app_name}} import blueprints
 from {{cookiecutter.app_name}}.extensions import db, marshmallow
 
 DEFAULT_BLUEPRINTS = (
-    blueprints.api_bp
+    blueprints.api_bp,
 )
 
 
@@ -53,7 +53,7 @@ def configure_blueprints(app, blueprints):
     """Configure blueprints in views"""
     for blueprint in blueprints:
         if isinstance(blueprint, str):
-            blueprint = getattr(views, blueprint)
+            blueprint = getattr(blueprints, blueprint)
         app.register_blueprint(blueprint)
 
 
