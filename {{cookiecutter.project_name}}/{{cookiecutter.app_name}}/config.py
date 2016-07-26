@@ -5,7 +5,8 @@ TESTING = False
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
-SQLALCHEMY_DATABASE_URI = 'sqlite:///api.db'
+SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/api.db'
+SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 
 LOGGING_CONFIG = {
