@@ -3,11 +3,11 @@ import logging.config
 
 from flask import Flask
 
-from {{cookiecutter.app_name}} import views
+from {{cookiecutter.app_name}} import blueprints
 from {{cookiecutter.app_name}}.extensions import db, marshmallow
 
 DEFAULT_BLUEPRINTS = (
-    views.api
+    blueprints.api_bp
 )
 
 
