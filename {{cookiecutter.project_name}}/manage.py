@@ -14,7 +14,7 @@ manager.add_command('db', MigrateCommand)
 
 @manager.command
 def run():
-    app.run()
+    app.run(debug=True)
 
 
 if __name__ == "__main__":
