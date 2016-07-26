@@ -1,4 +1,5 @@
 {
   "project_name": "restful_api",
-  "app_name": "myapi"
+  "app_name": "myapi",
+  "app_instance_path": "/tmp"
 }
