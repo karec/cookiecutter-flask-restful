@@ -1,12 +1,17 @@
 from flask import request
+from marshmallow import fields
 from flask_restful import Resource
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm.exc import NoResultFound
 
-from {{cookiecutter.app_name}}.extensions import marshmallow, db
+from {{cookiecutter.app_name}}.common.schema_utils import BaseAPISchema
+from {{cookiecutter.app_name}}.extensions import db
 from {{cookiecutter.app_name}}.models import User
 
 
-class UserSchema(marshmallow.ModelSchema):
+class UserSchema(BaseAPISchema):
+
+    email = fields.Email()
 
     class Meta:
         model = User
@@ -19,12 +24,8 @@ class UserDetail(Resource):
 
     def get(self, user_id):
         try:
-            user = db.session.query(User).filter_by(id=user_id).one()
-            data, errors = self.schema.dump(user)
-
-            if errors:
-                return errors, 422
-
+            user = User.query.get_or_404(user_id)
+            data = self.schema.dump(user)
             return data
         except NoResultFound:
             return {"message": "User not found"}, 404
@@ -34,25 +35,18 @@ class UserList(Resource):
 
     def get(self):
         schema = UserSchema(many=True)
-        users = db.session.query(User).all()
-        results, errors = schema.dump(users)
-
-        if errors:
-            return errors, 422
-
+        users = User.query.all()
+        results = schema.dump(users)
         return results
 
     def post(self):
         schema = UserSchema()
 
         try:
-            user, errors = schema.load(request.get_json())
-            if errors:
-                return errors, 422
-
+            user = schema.load(request.get_json())
             db.session.add(user)
             db.session.commit()
             return schema.dump(user).data, 201
-        except Exception as e:
+        except SQLAlchemyError as e:
             db.session.rollback()
             return str(e), 500
