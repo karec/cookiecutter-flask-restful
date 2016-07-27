@@ -11,9 +11,9 @@ class BaseAPISchema(marshmallow.ModelSchema):
     This class can be used if you always handle validation errors the same way
     """
 
-    def load(self, data, many=None, partial=None):
-        data, errors = super(BaseAPISchema, self).load(data, many, partial)
-
+    def load(self, data, session=None, instance=None, *args, **kwargs):
+        data, errors = super(BaseAPISchema, self).load(data, session, instance, *args, **kwargs)
+        print(data)
         if errors:
             raise SchemaValidationError(errors)
 
