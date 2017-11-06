@@ -1,4 +1,4 @@
-from {{cookiecutter.app_name}}.models.user import User
+from .user import User
 
 
 __all__ = [

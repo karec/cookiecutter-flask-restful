@@ -1,67 +1,44 @@
-import logging.config
-
-
 from flask import Flask
 
-from {{cookiecutter.app_name}} import blueprints
-from {{cookiecutter.app_name}}.extensions import db, marshmallow
-
-DEFAULT_BLUEPRINTS = (
-    blueprints.api_bp,
-)
+from {{cookiecutter.app_name}} import auth, api
+from {{cookiecutter.app_name}}.extensions import db, jwt
 
 
-__all__ = ['create_app']
+def create_app(config=None, testing=False):
+    """Application factory, used to create application
+    """
+    app = Flask('{{cookiecutter.app_name}}')
 
-
-def create_app(blueprints=None, testing=False):
-    """Create flask app and return it"""
-    if blueprints is None:
-        blueprints = DEFAULT_BLUEPRINTS
-
-    app = Flask(
-        '{{cookiecutter.app_name}}',
-        instance_path='{{cookiecutter.app_instance_path}}',
-        instance_relative_config=True
-    )
-
-    configure_app(app, testing=testing)
-    configure_db(app)
-    configure_blueprints(app, blueprints)
-    configure_marshmallow(app)
-    configure_logging(app)
+    configure_app(app)
+    configure_extensions(app)
+    register_blueprints(app)
 
     return app
 
 
-def configure_app(app, testing):
-    """Initialize configuration"""
+def configure_app(app, testing=False):
+    """set configuration for application
+    """
+    # default configuration
     app.config.from_object('{{cookiecutter.app_name}}.config')
 
     if testing is True:
-        app.config.from_object('{{cookiecutter.app_name}}.test_config')
+        # override with testing config
+        app.config.from_object('{{cookiecutter.app_name}}.configtest')
     else:
-        app.config.from_pyfile('config.cfg', silent=True)
+        # override with env variable, fail silently if not set
+        app.config.from_envvar("{{cookiecutter.app_name|upper}}_CONFIG", silent=True)
 
 
-def configure_db(app):
-    """Initialize database"""
+def configure_extensions(app):
+    """configure flask extensions
+    """
     db.init_app(app)
+    jwt.init_app(app)
 
 
-def configure_blueprints(app, blueprints):
-    """Configure blueprints in views"""
-    for blueprint in blueprints:
-        if isinstance(blueprint, str):
-            blueprint = getattr(blueprints, blueprint)
-        app.register_blueprint(blueprint)
-
-
-def configure_marshmallow(app):
-    """Initialize marshmallow"""
-    marshmallow.init_app(app)
-
-
-def configure_logging(app):
-    """Configure logging"""
-    logging.config.dictConfig(app.config['LOGGING_CONFIG'])
+def register_blueprints(app):
+    """register all blueprints for application
+    """
+    app.register_blueprint(auth.views.blueprint)
+    app.register_blueprint(api.views.blueprint)

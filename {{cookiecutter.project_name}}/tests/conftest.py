@@ -1,20 +1,15 @@
+import json
 import pytest
 
-
+from {{cookiecutter.app_name}}.models import User
 from {{cookiecutter.app_name}}.app import create_app
 from {{cookiecutter.app_name}}.extensions import db as _db
-from .factories import user_factory
 
 
 @pytest.fixture
 def app():
-    app_test = create_app(testing=True)
-    return app_test
-
-
-@pytest.fixture
-def testapp(app):
-    return app.test_client()
+    app = create_app(testing=True)
+    return app
 
 
 @pytest.fixture
@@ -31,7 +26,33 @@ def db(app):
 
 
 @pytest.fixture
-def users(db):
-    users = [user_factory(i) for i in range(0, 50)]
-    db.session.add_all(users)
+def admin_user(db):
+    user = User(
+        username='admin',
+        email='admin@admin.com',
+        password='admin'
+    )
+
+    db.session.add(user)
     db.session.commit()
+
+    return user
+
+
+@pytest.fixture
+def admin_headers(admin_user, client):
+    data = {
+        'username': admin_user.username,
+        'password': 'admin'
+    }
+    rep = client.post(
+        '/auth/login',
+        data=json.dumps(data),
+        headers={'content-type': 'application/json'}
+    )
+
+    tokens = json.loads(rep.get_data(as_text=True))
+    return {
+        'content-type': 'application/json',
+        'authorization': 'Bearer %s' % tokens['access_token']
+    }
