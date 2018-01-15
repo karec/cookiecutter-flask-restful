@@ -25,7 +25,7 @@ Used packages :
 * [Flask-Migrate](https://flask-migrate.readthedocs.io/en/latest/)
 * [Flask-SQLAlchemy](http://flask-sqlalchemy.pocoo.org/2.3/)
 * [Flask-Marshmallow](https://flask-marshmallow.readthedocs.io/en/latest/)
-* [Flask-JWT-Extended](https://flask-marshmallow.readthedocs.io/en/latest/)
+* [Flask-JWT-Extended](http://flask-jwt-extended.readthedocs.io/en/latest/)
 * [marshmallow-sqlalchemy](https://marshmallow-sqlalchemy.readthedocs.io/en/latest/)
 * [passlib](https://passlib.readthedocs.io/en/stable/)
 * [tox](https://tox.readthedocs.io/en/latest/)
