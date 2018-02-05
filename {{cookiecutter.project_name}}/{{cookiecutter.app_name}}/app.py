@@ -1,7 +1,7 @@
 from flask import Flask
 
 from {{cookiecutter.app_name}} import auth, api
-from {{cookiecutter.app_name}}.extensions import db, jwt
+from {{cookiecutter.app_name}}.extensions import db, jwt, migrate
 
 
 def create_app(config=None, testing=False):
@@ -35,6 +35,7 @@ def configure_extensions(app):
     """
     db.init_app(app)
     jwt.init_app(app)
+    migrate.init_app(app)
 
 
 def register_blueprints(app):
