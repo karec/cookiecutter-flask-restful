@@ -15,6 +15,6 @@ from flask_migrate import Migrate
 db = SQLAlchemy()
 jwt = JWTManager()
 ma = Marshmallow()
-migrate = Mirage(app, db)
+migrate = Migrate(app, db)
 
 pwd_context = CryptContext(schemes=['pbkdf2_sha256'], deprecated='auto')
