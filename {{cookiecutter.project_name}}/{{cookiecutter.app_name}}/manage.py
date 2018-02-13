@@ -1,12 +1,11 @@
 import click
 from flask.cli import FlaskGroup
-from flask_migrate import MigrateCommand
 
 from {{cookiecutter.app_name}}.app import create_app
 
 
 def create_{{cookiecutter.app_name}}(info):
-    return create_app()
+    return create_app(cli=True)
 
 
 @click.group(cls=FlaskGroup, create_app=create_{{cookiecutter.app_name}})
@@ -35,12 +34,6 @@ def init():
     db.session.add(user)
     db.session.commit()
     click.echo("created user admin")
-
-
-@cli.command()
-def db():
-    """Flask-migrate integration"""
-    MigrateCommand()
 
 
 if __name__ == "__main__":

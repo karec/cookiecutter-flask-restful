@@ -1,16 +1,16 @@
 from flask import Flask
 
 from {{cookiecutter.app_name}} import auth, api
-from {{cookiecutter.app_name}}.extensions import db, jwt
+from {{cookiecutter.app_name}}.extensions import db, jwt, migrate
 
 
-def create_app(config=None, testing=False):
+def create_app(config=None, testing=False, cli=False):
     """Application factory, used to create application
     """
     app = Flask('{{cookiecutter.app_name}}')
 
-    configure_app(app)
-    configure_extensions(app)
+    configure_app(app, testing)
+    configure_extensions(app, cli)
     register_blueprints(app)
 
     return app
@@ -30,11 +30,14 @@ def configure_app(app, testing=False):
         app.config.from_envvar("{{cookiecutter.app_name|upper}}_CONFIG", silent=True)
 
 
-def configure_extensions(app):
+def configure_extensions(app, cli):
     """configure flask extensions
     """
     db.init_app(app)
     jwt.init_app(app)
+
+    if cli is True:
+        migrate.init_app(app, db)
 
 
 def register_blueprints(app):
