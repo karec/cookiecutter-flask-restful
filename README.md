@@ -96,3 +96,42 @@ this will only return a new access token
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwiaWRlbnRpdHkiOjEsImlhdCI6MTUxMDAwMDYxOCwiZnJlc2giOmZhbHNlLCJqdGkiOiIzODcxMzg4Ni0zNGJjLTRhOWQtYmFlYS04MmZiNmQwZjEyNjAiLCJuYmYiOjE1MTAwMDA2MTgsImV4cCI6MTUxMDAwMTUxOH0.cHuNf-GxVFJnUZ_k9ycoMMb-zvZ10Y4qbrW8WkXdlpw"
 }
 ```
+
+### Running tests
+
+Simplest way to run tests is to use tox, it will create a virtualenv for tests, install all dependencies and run pytest
+
+```
+tox
+```
+
+But you can also run pytest manually, you just need to install tests dependencies before
+
+```
+pip install pytest pytest-runner pytest-flask pytest-factoryboy factory_boy
+pytest
+```
+
+### Running with gunicorn
+
+This project provide a simple wsgi entry point to run gunicorn or uwsgi for example.
+
+For gunicorn you only need to run the following commands
+
+```
+pip install gunicorn
+gunicorn myapi.wsgi:app
+```
+
+And that's it ! Gunicorn is running on port 8000
+
+### Running with uwsgi
+
+Pretty much the same as gunicorn here
+
+```
+pip install uwsgi
+uwsgi --http 127.0.0.1:5000 --module myapi.wsgi:app
+```
+
+And that's it ! Uwsgi is running on port 5000
