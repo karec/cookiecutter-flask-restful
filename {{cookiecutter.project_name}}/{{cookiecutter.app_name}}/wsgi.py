@@ -1,5 +1,5 @@
 import os
 
-from {{cookiecutter.app_name}} import create_app
+from {{cookiecutter.app_name}}.app import create_app
 
-application = create_app(blueprints=blueprints)
+app = create_app()
