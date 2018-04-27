@@ -1,4 +1,3 @@
-import json
 import factory
 from pytest_factoryboy import register
 
@@ -28,7 +27,7 @@ def test_get_user(client, db, user, admin_headers):
     rep = client.get('/api/v1/users/%d' % user.id, headers=admin_headers)
     assert rep.status_code == 200
 
-    data = json.loads(rep.get_data(as_text=True))['user']
+    data = rep.get_json()['user']
     assert data['username'] == user.username
     assert data['email'] == user.email
     assert data['active'] == user.active
@@ -44,15 +43,15 @@ def test_put_user(client, db, user, admin_headers):
 
     data = {'username': 'updated'}
 
-    # test get_user
+    # test update user
     rep = client.put(
         '/api/v1/users/%d' % user.id,
-        data=json.dumps(data),
+        json=data,
         headers=admin_headers
     )
     assert rep.status_code == 200
 
-    data = json.loads(rep.get_data(as_text=True))['user']
+    data = rep.get_json()['user']
     assert data['username'] == 'updated'
     assert data['email'] == user.email
     assert data['active'] == user.active
@@ -83,7 +82,7 @@ def test_create_user(client, db, admin_headers):
     }
     rep = client.post(
         '/api/v1/users',
-        data=json.dumps(data),
+        json=data,
         headers=admin_headers
     )
     assert rep.status_code == 422
@@ -93,12 +92,12 @@ def test_create_user(client, db, admin_headers):
 
     rep = client.post(
         '/api/v1/users',
-        data=json.dumps(data),
+        json=data,
         headers=admin_headers
     )
     assert rep.status_code == 201
 
-    data = json.loads(rep.get_data(as_text=True))
+    data = rep.get_json()
     user = db.session.query(User).filter_by(id=data['user']['id']).first()
 
     assert user.username == 'created'
@@ -114,6 +113,6 @@ def test_get_all_user(client, db, user_factory, admin_headers):
     rep = client.get('/api/v1/users', headers=admin_headers)
     assert rep.status_code == 200
 
-    results = json.loads(rep.get_data(as_text=True))
+    results = rep.get_json()
     for user in users:
         assert any(u['id'] == user.id for u in results['results'])

@@ -15,6 +15,7 @@ setup(
         'flask-jwt-extended',
         'flask-marshmallow',
         'marshmallow-sqlalchemy',
+        'python-dotenv',
         'passlib'
     ],
     entry_points={

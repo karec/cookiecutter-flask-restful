@@ -5,5 +5,6 @@ flask-sqlalchemy
 flask-marshmallow
 flask-jwt-extended
 marshmallow-sqlalchemy
+python-dotenv
 passlib
 tox

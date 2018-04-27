@@ -7,10 +7,10 @@ Cookiecutter template for flask restful, including blueprints, application facto
 This cookie cutter is a very simple boilerplate for starting a REST api using Flask, flask-restful, marshmallow, SQLAlchemy and jwt.
 It comes with basic project structure and configuration, including blueprints, application factory and basics unit tests.
 
-Features 
+Features
 
 * Simple flask application using application factory, blueprints
-* [Flask command line interface](http://flask.pocoo.org/docs/0.12/cli/) integration
+* [Flask command line interface](http://flask.pocoo.org/docs/1.0/cli/) integration
 * Simple cli implementation with basics commands (init, run, etc.)
 * [Flask Migrate](https://flask-migrate.readthedocs.io/en/latest/) included in entry point
 * Authentication using [Flask-JWT-Extended](http://flask-jwt-extended.readthedocs.io/en/latest/) including access token and refresh token management
@@ -31,6 +31,7 @@ Used packages :
 * [tox](https://tox.readthedocs.io/en/latest/)
 * [pytest](https://docs.pytest.org/en/latest/)
 * [factoryboy](http://factoryboy.readthedocs.io/en/latest/)
+* [dotenv](https://github.com/theskumar/python-dotenv)
 
 
 ## Usage
@@ -39,10 +40,11 @@ Used packages :
 
 For the example, let's say you named your app `myapi` and your project `myproject`
 
-Once project started with cookiecutter, you can install it using pip : 
+Once project started with cookiecutter, you can install it using pip :
 
 ```
 cd myproject
+pip install -r requirements
 pip install -e .
 ```
 
@@ -135,3 +137,10 @@ uwsgi --http 127.0.0.1:5000 --module myapi.wsgi:app
 ```
 
 And that's it ! Uwsgi is running on port 5000
+
+
+### Using Flask CLI
+
+This cookiecutter is fully compatible with default flask CLI and use a `.flaskenv` file to set correct 
+env variables to bind the application factory.
+Note that we also set `FLASK_ENV` to `development` to enable debugger.
