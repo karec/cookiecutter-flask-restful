@@ -40,24 +40,17 @@ Used packages :
 
 For the example, let's say you named your app `myapi` and your project `myproject`
 
-Once project started with cookiecutter, you can install it using pip :
+Once project started with cookiecutter, you can install it using pipenv :
 
 ```
 cd myproject
-pip install -r requirements
-pip install -e .
+pipenv install
 ```
 
-You have now access to cli commands and you can init your project
+You now have access to cli commands and you can init your project
 
 ```
-myapi init
-```
-
-To list all commands
-
-```
-myapi --help
+flask --help
 ```
 
 ### Authentication
@@ -67,7 +60,7 @@ To access protected resources, you will need an access token. You can generate
 an access and a refresh token using `/auth/login` endpoint, example using curl
 
 ```bash
-curl -X POST -H "Content-Type: application/json" -d '{"username": "admin", "password": "admin"}' http://localhost:5000/auth/login
+curl -X POST -H "Content-Type: application/json" -d '{"username": "admin", "password": "admin"}' http://localhost:5100/auth/login
 ```
 
 This will return something like this
@@ -78,17 +71,17 @@ This will return something like this
   "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6MSwiaWF0IjoxNTEwMDAwNDQxLCJ0eXBlIjoicmVmcmVzaCIsImp0aSI6IjRmMjgxOTQxLTlmMWYtNGNiNi05YmI1LWI1ZjZhMjRjMmU0ZSIsIm5iZiI6MTUxMDAwMDQ0MSwiZXhwIjoxNTEyNTkyNDQxfQ.SJPsFPgWpZqZpHTc4L5lG_4aEKXVVpLLSW1LO7g4iU0"
 }
 ```
-You can use access_token to access protected endpoints :
+You can use the access_token to access protected endpoints :
 
 ```bash
-curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwiaWRlbnRpdHkiOjEsImlhdCI6MTUxMDAwMDQ0MSwiZnJlc2giOmZhbHNlLCJqdGkiOiI2OTg0MjZiYi00ZjJjLTQ5MWItYjE5YS0zZTEzYjU3MzFhMTYiLCJuYmYiOjE1MTAwMDA0NDEsImV4cCI6MTUxMDAwMTM0MX0.P-USaEIs35CSVKyEow5UeXWzTQTrrPS_YjVsltqi7N4" http://127.0.0.1:5000/api/v1/users
+curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwiaWRlbnRpdHkiOjEsImlhdCI6MTUxMDAwMDQ0MSwiZnJlc2giOmZhbHNlLCJqdGkiOiI2OTg0MjZiYi00ZjJjLTQ5MWItYjE5YS0zZTEzYjU3MzFhMTYiLCJuYmYiOjE1MTAwMDA0NDEsImV4cCI6MTUxMDAwMTM0MX0.P-USaEIs35CSVKyEow5UeXWzTQTrrPS_YjVsltqi7N4" http://127.0.0.1:5100/api/v1/users
 ```
 
 You can use refresh token to retreive a new access_token using the endpoint `/auth/refresh`
 
 
 ```bash
-curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6MSwiaWF0IjoxNTEwMDAwNDQxLCJ0eXBlIjoicmVmcmVzaCIsImp0aSI6IjRmMjgxOTQxLTlmMWYtNGNiNi05YmI1LWI1ZjZhMjRjMmU0ZSIsIm5iZiI6MTUxMDAwMDQ0MSwiZXhwIjoxNTEyNTkyNDQxfQ.SJPsFPgWpZqZpHTc4L5lG_4aEKXVVpLLSW1LO7g4iU0" http://127.0.0.1:5000/auth/refresh
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6MSwiaWF0IjoxNTEwMDAwNDQxLCJ0eXBlIjoicmVmcmVzaCIsImp0aSI6IjRmMjgxOTQxLTlmMWYtNGNiNi05YmI1LWI1ZjZhMjRjMmU0ZSIsIm5iZiI6MTUxMDAwMDQ0MSwiZXhwIjoxNTEyNTkyNDQxfQ.SJPsFPgWpZqZpHTc4L5lG_4aEKXVVpLLSW1LO7g4iU0" http://127.0.0.1:5100/auth/refresh
 ```
 
 this will only return a new access token
@@ -110,8 +103,7 @@ tox
 But you can also run pytest manually, you just need to install tests dependencies before
 
 ```
-pip install pytest pytest-runner pytest-flask pytest-factoryboy factory_boy
-pytest
+pytest tests
 ```
 
 ### Running with gunicorn
@@ -122,10 +114,10 @@ For gunicorn you only need to run the following commands
 
 ```
 pip install gunicorn
-gunicorn myapi.wsgi:app
+gunicorn -c ./docker/gunicorn.py --bind 0.0.0.0:5100 wsgi:app
 ```
 
-And that's it ! Gunicorn is running on port 8000
+And that's it ! Gunicorn is running on port 5100
 
 ### Running with uwsgi
 
@@ -133,10 +125,10 @@ Pretty much the same as gunicorn here
 
 ```
 pip install uwsgi
-uwsgi --http 127.0.0.1:5000 --module myapi.wsgi:app
+uwsgi --http 0.0.0.0:5100 --module wsgi:app
 ```
 
-And that's it ! Uwsgi is running on port 5000
+And that's it ! Uwsgi is running on port 5100
 
 
 ### Using Flask CLI
