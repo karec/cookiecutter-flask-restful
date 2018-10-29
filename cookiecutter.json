@@ -1,4 +1,11 @@
 {
-  "project_name": "restful_api",
-  "app_name": "myapi"
+  "project_name": "Eventador API",
+  "app_name": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "project_short_description": "Python API Boilerplate contains all the boilerplate you need to create an API.",
+  "use_pytest": "n",
+  "author": "Eventadorlabs inc.",
+  "email": "developers@eventador.io",
+  "version": "0.1.0",
+  "release": "2018/01/01",
+  "secret_key": "post_gen_change_secret_key"
 }

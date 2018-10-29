@@ -1,0 +1,9 @@
+FLASK_APP={{cookiecutter.app_name}}.app:app
+FLASK_ENV=development
+
+# Postgres
+DB_HOST=postgresdb
+DB_PORT=5432
+DB_USER=eventador_admin
+DB_PASSWORD=changeme
+DB_DATABASE=eventador_admin

@@ -1,0 +1,2 @@
+release={{cookiecutter.version}}
+tag={{cookiecutter.app_name}}-{{cookiecutter.version}}

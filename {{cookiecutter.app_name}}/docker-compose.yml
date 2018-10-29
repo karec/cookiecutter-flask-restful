@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+
+  {{cookiecutter.app_name}}:
+    image: {{cookiecutter.app_name}}:latest
+    build: .
+    stdin_open: true
+    ports:
+      - 5100:5100
+    working_dir: /app
+    tty: true
+    links:
+    - postgresdb
+    env_file: ./docker/docker-env
+    volumes:
+      - .:/app
+    restart: always
+    entrypoint: /tmp/wait-for-it.sh postgresdb:5432 -t 60 --
+    command: gunicorn -c /app/docker/gunicorn.py --bind 0.0.0.0:5100 wsgi:app
+    networks:
+      - back-tier
+
+  postgresdb:
+    image: postgres:latest
+    volumes:
+    - './postgresdata:/var/lib/postgresql/data'
+    ports:
+     - 5432:5432
+    networks:
+      - back-tier
+
+  postgres-seed:
+    build:
+      context: docker
+    environment:
+      - DATABASE_PASS=29AufpXMvspit
+    links:
+      - postgresdb
+
+networks:
+    back-tier:

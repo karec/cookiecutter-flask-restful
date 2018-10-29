@@ -1,0 +1,25 @@
+{
+  "auth": {
+    "customer": {
+      "sts": {
+        "external_id": "be85b8c6089d4e47a50c0e497dc19a22",
+        "role_arn": "arn:aws:iam::658177867873:role/eventador_provisioning_role"
+      }
+    },
+    "eventador": {
+      "sts": {
+        "external_id": "37de7ce82b31453fa5a86b03e54285ba",
+        "role_arn": "arn:aws:iam::016926191061:role/ent_c-cb-cross-role"
+      }
+    }
+  },
+  "db_config": {
+    "host": "localhost",
+    "port": "5432",
+    "database": "eventador_admin",
+    "user": "eventador_admin",
+    "password": "29AufpXMvspit"
+  },
+  "public_hosted_zone_id": "ZTWXECHSD5YO0",
+  "private_hosted_zone_id": "Z219MNC59MWMSE"
+}

@@ -1,0 +1,47 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+Flask = "*"
+Flask-RESTful = "*"
+flask-marshmallow = "*"
+flask-migrate = "*"
+flask-sqlalchemy = "*"
+marshmallow-sqlalchemy = "*"
+marshmallow = "*"
+"psycopg2" = "*"
+"boto3" = "*"
+botocore = "*"
+click = "*"
+"Jinja2" = "*"
+itsdangerous = "*"
+Werkzeug = "*"
+gunicorn = "*"
+meinheld = "*"
+slackclient = "*"
+pytest-localstack = "*"
+healthcheck = "*"
+slacker-log-handler = "*"
+passlib = "*"
+flask-jwt-extended = "*"
+
+[dev-packages]
+pytest = "*"
+tox = "*"
+coverage = "*"
+flask-debugtoolbar = "*"
+flask-testing = "*"
+"flake8" = "*"
+factory-boy = "*"
+pytest-factoryboy = "*"
+pytest-flask = "*"
+python-dotenv = "*"
+sphinx = "*"
+
+[requires]
+python_version = "3.6"
+
+[pipenv]
+allow_prereleases = true
