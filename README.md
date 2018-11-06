@@ -44,7 +44,7 @@ Once project started with cookiecutter, you can install it using pip :
 
 ```
 cd myproject
-pip install -r requirements
+pip install -r requirements.txt
 pip install -e .
 ```
 
