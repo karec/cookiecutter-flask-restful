@@ -8,3 +8,4 @@ marshmallow-sqlalchemy
 python-dotenv
 passlib
 tox
+{% if cookiecutter.use_celery == "yes" %}celery{% endif %}
