@@ -144,3 +144,47 @@ And that's it ! Uwsgi is running on port 5000
 This cookiecutter is fully compatible with default flask CLI and use a `.flaskenv` file to set correct 
 env variables to bind the application factory.
 Note that we also set `FLASK_ENV` to `development` to enable debugger.
+
+
+### Using Celery
+
+This cookiecutter has an optional [Celery](http://www.celeryproject.org/) integration that let you choose if you want to use it or not in your project.
+If you choose to use Celery, additionnal code and files will be generated to get started with it.
+
+This code will include a dummy task located in `yourproject/yourapp/tasks/example.py` that only return `"OK"` and a `celery_app` file used to your celery workers.
+
+
+#### Running celery workers
+
+In your project path, once dependencies are installed, you can just run
+
+```
+celery worker -A myapi.celery_app:app --loglevel=info
+```
+
+If you have updated your configuration for broker / result backend your workers should start and you should see the example task
+
+```
+[tasks]
+  . myapi.tasks.example.dummy_task
+```
+
+
+#### Running a task
+
+To run a task you can either import it and call it
+
+```python
+>>> from myapi.tasks.example import dummy_task
+>>> result = dummy_task.delay()
+>>> result.get()
+'OK'
+```
+
+Or use the celery extension
+
+```python
+>>> from myapi.extensions import celery
+>>> celery.send_task('myapi.tasks.example.dummy_task').get()
+'OK'
+```
