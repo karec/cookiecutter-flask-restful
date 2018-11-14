@@ -11,8 +11,8 @@ def create_app(config=None, testing=False, cli=False):
 
     configure_app(app, testing)
     configure_extensions(app, cli)
-    register_blueprints(app)
-    {% if cookiecutter.use_celery == "yes" %}init_celery(app){% endif %}
+    register_blueprints(app){% if cookiecutter.use_celery == "yes" %}
+    init_celery(app){% endif %}
 
     return app
 
@@ -45,10 +45,9 @@ def register_blueprints(app):
     """register all blueprints for application
     """
     app.register_blueprint(auth.views.blueprint)
-    app.register_blueprint(api.views.blueprint)
+    app.register_blueprint(api.views.blueprint){% if cookiecutter.use_celery == "yes" %}
 
 
-{% if cookiecutter.use_celery == "yes" %}
 def init_celery(app=None):
     app = app or create_app()
     celery.conf.broker_url = app.config['CELERY_BROKER_URL']
@@ -62,5 +61,4 @@ def init_celery(app=None):
                 return self.run(*args, **kwargs)
 
     celery.Task = ContextTask
-    return celery
-{% endif %}
+    return celery{% endif %}

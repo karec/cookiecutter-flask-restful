@@ -1,5 +1,5 @@
 {
     "project_name": "restful_api",
     "app_name": "myapi",
-    "use_celery": ["yes", "no"]
+    "use_celery": ["no", "yes"]
 }
