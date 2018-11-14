@@ -15,5 +15,5 @@ db = SQLAlchemy()
 jwt = JWTManager()
 ma = Marshmallow()
 migrate = Migrate()
-pwd_context = CryptContext(schemes=['pbkdf2_sha256'], deprecated='auto')
-{%if cookiecutter.use_celery == "yes" %}celery = Celery(){% endif %}
+pwd_context = CryptContext(schemes=['pbkdf2_sha256'], deprecated='auto'){%if cookiecutter.use_celery == "yes" %}
+celery = Celery(){% endif %}
