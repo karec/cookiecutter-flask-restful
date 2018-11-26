@@ -7,4 +7,5 @@ flask-jwt-extended
 marshmallow-sqlalchemy
 python-dotenv
 passlib
-tox
+tox{% if cookiecutter.use_celery == "yes" %}
+celery{% endif %}

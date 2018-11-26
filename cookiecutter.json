@@ -1,4 +1,5 @@
 {
-  "project_name": "restful_api",
-  "app_name": "myapi"
+    "project_name": "restful_api",
+    "app_name": "myapi",
+    "use_celery": ["no", "yes"]
 }
