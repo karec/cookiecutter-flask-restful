@@ -16,7 +16,7 @@ Features
 * Authentication using [Flask-JWT-Extended](http://flask-jwt-extended.readthedocs.io/en/latest/) including access token and refresh token management
 * Simple pagination utils
 * Unit tests using pytest and factoryboy
-* Configuration override using environment variable
+* Configuration using environment variables
 
 Used packages :
 
@@ -59,6 +59,30 @@ To list all commands
 ```
 myapi --help
 ```
+
+### Configuration
+
+Configuration is handled by environment variables, for development purpose you just
+need to update / add entries in `.flaskenv` file.
+
+It's filled by default with following content:
+
+```
+FLASK_ENV=development
+FLASK_APP="myapp.app:create_app"
+SECRET_KEY=changeme
+DATABASE_URI="sqlite:////tmp/myapp.db"
+CELERY_BROKER_URL=amqp://guest:guest@localhost/  # only present when celery is enabled
+CELERY_RESULT_BACKEND_URL=amqp://guest:guest@localhost/  # only present when celery is enabled
+```
+
+Avaible configuration keys:
+
+* `FLASK_ENV`: flask configuration key, enables `DEBUG` if set to `development`
+* `SECREY_KEY`: your application secret key
+* `DATABASE_URI`: SQLAlchemy connection string
+* `CELERY_BROKER_URL`: URL to use for celery broker, only when you enabled celery
+* `CELERY_RESULT_BACKEND_URL`: URL to use for celery result backend (e.g: `redis://localhost`)
 
 ### Authentication
 
@@ -114,6 +138,8 @@ pip install pytest pytest-runner pytest-flask pytest-factoryboy factory_boy
 pytest
 ```
 
+**WARNING**: you will need to set env variables
+
 ### Running with gunicorn
 
 This project provide a simple wsgi entry point to run gunicorn or uwsgi for example.
@@ -162,7 +188,7 @@ In your project path, once dependencies are installed, you can just run
 celery worker -A myapi.celery_app:app --loglevel=info
 ```
 
-If you have updated your configuration for broker / result backend your workers should start and you should see the example task
+If you have updated your configuration for broker / result backend your workers should start and you should see the example task avaible
 
 ```
 [tasks]
@@ -188,3 +214,15 @@ Or use the celery extension
 >>> celery.send_task('myapi.tasks.example.dummy_task').get()
 'OK'
 ```
+
+
+## Changelog
+
+### 24/04/2019
+
+* Update configuration to only use env variables, `.flaskenv` has been updated too
+* Add unit tests for celery
+* Add flake8 to tox
+* Configuration file cannot be overridden by `MYAPP CONFIG` env variable anymore
+* various cleanups (unused imports, removed `configtest.py` file, flake8 errors)
+

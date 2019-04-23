@@ -11,7 +11,8 @@ If we choose to use database to handle blacklist in this example, it's mainly
 because it will allow you to run the example without needing to setup anything else
 like a redis or a memcached server.
 
-This example is heavily inspired by https://github.com/vimalloc/flask-jwt-extended/blob/master/examples/database_blacklist/
+This example is heavily inspired by
+https://github.com/vimalloc/flask-jwt-extended/blob/master/examples/database_blacklist/
 """
 from {{cookiecutter.app_name}}.extensions import db
 

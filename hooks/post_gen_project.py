@@ -25,3 +25,9 @@ if use_celery == "no":
     except Exception:
         print("ERROR: cannot delete celery application file")
         sys.exit(1)
+
+    try:
+        os.remove(os.path.join(base_path, "tests", "test_celery.py"))
+    except Exception:
+        print("ERROR: cannot delete celery tests files")
+        sys.exit(1)

@@ -1,6 +1,7 @@
 """Various helpers for auth. Mainly about tokens blacklisting
 
-heavily inspired by https://github.com/vimalloc/flask-jwt-extended/blob/master/examples/database_blacklist/blacklist_helpers.py
+heavily inspired by
+https://github.com/vimalloc/flask-jwt-extended/blob/master/examples/database_blacklist/blacklist_helpers.py
 """
 from datetime import datetime
 
