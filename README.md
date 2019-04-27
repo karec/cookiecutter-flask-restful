@@ -215,8 +215,44 @@ Or use the celery extension
 'OK'
 ```
 
+## Using docker
+
+**WARNING** both Dockerfile and `docker-compose.yml` are **NOT** suited for production, use them for development only or as a starting point.
+
+This template offer simple docker support to help you get started and it comes with both Dockerfile and a `docker-compose.yml`. Please note that docker-compose is mostly useful when using celery
+since it takes care of running rabbitmq, redis, your web API and celery workers at the same time, but it also work if you don't use celery at all.
+
+Dockerfile has intentionally no entrypoint to allow you to run any command from it (server, shell, init, celery, ...)
+
+Note that you still need to init your app on first start, even when using compose.
+
+```bash
+docker build -t myapp .
+...
+docker run --env-file=.flaskenv myapp myapi init
+docker run --env-file=.flaskenv -p 5000:5000 myapp myapi run -h 0.0.0.0
+ * Serving Flask app "myapi.app:create_app" (lazy loading)
+ * Environment: development
+ * Debug mode: on
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 214-619-010
+```
+
+With compose
+
+```bash
+docker-compose up
+...
+docker exec -it <container_id> myapi init
+```
 
 ## Changelog
+
+### 26/04/2019
+
+* Added docker and docker-compose support
 
 ### 24/04/2019
 

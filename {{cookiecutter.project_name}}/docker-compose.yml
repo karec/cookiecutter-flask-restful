@@ -1,0 +1,35 @@
+# WARNING: this file is not suitable for production, please use with caution
+version: '3'
+
+services:
+  web:
+    image: {{cookiecutter.app_name}}
+    build: .
+    command: {{cookiecutter.app_name}} run -h 0.0.0.0
+    env_file:
+      - ./.flaskenv
+    environment:
+      - DATABASE_URI=sqlite:////db/{{cookiecutter.app_name}}.db{% if cookiecutter.use_celery == "yes"%}
+      - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq
+      - CELERY_RESULT_BACKEND_URL=redis://redis{% endif %}
+    volumes:
+      - ./{{cookiecutter.app_name}}:/code/{{cookiecutter.app_name}}
+      - ./db/:/db/
+    ports:
+      - "5000:5000"{% if cookiecutter.use_celery == "yes" %}
+  rabbitmq:
+    image: rabbitmq
+  redis:
+    image: redis
+  celery:
+    image: {{cookiecutter.app_name}}
+    command: "celery worker -A {{cookiecutter.app_name}}.celery_app:app"
+    env_file:
+      - ./.flaskenv
+    volumes:
+      - .:/code
+    depends_on:
+      - rabbitmq
+    environment:
+      - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq
+      - CELERY_RESULT_BACKEND_URL=redis://redis{% endif %}
