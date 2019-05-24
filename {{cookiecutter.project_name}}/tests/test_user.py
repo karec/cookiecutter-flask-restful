@@ -59,7 +59,7 @@ def test_put_user(client, db, user, admin_headers):
 
 def test_delete_user(client, db, user, admin_headers):
     # test 404
-    rep = client.put("/api/v1/users/100000", headers=admin_headers)
+    rep = client.delete("/api/v1/users/100000", headers=admin_headers)
     assert rep.status_code == 404
 
     db.session.add(user)
