@@ -33,6 +33,8 @@ class UserResource(Resource):
         if errors:
             return errors, 422
 
+        db.session.commit()
+
         return {"msg": "user updated", "user": schema.dump(user).data}
 
     def delete(self, user_id):
