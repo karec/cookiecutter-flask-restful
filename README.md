@@ -17,6 +17,7 @@ Features
 * Simple pagination utils
 * Unit tests using pytest and factoryboy
 * Configuration using environment variables
+* OpenAPI json file and swagger UI
 
 Used packages :
 
@@ -32,6 +33,7 @@ Used packages :
 * [pytest](https://docs.pytest.org/en/latest/)
 * [factoryboy](http://factoryboy.readthedocs.io/en/latest/)
 * [dotenv](https://github.com/theskumar/python-dotenv)
+* [apispec](https://github.com/marshmallow-code/apispec)
 
 
 ## Usage
@@ -167,8 +169,7 @@ And that's it ! Uwsgi is running on port 5000
 
 ### Using Flask CLI
 
-This cookiecutter is fully compatible with default flask CLI and use a `.flaskenv` file to set correct 
-env variables to bind the application factory.
+This cookiecutter is fully compatible with default flask CLI and use a `.flaskenv` file to set correct env variables to bind the application factory.
 Note that we also set `FLASK_ENV` to `development` to enable debugger.
 
 
@@ -248,7 +249,32 @@ docker-compose up
 docker exec -it <container_id> myapi init
 ```
 
+## Using APISpec and Swagger
+
+This boilerplate comes with pre-configured APISpec and swagger endpoints. Using default configuration you have two endpoints avaible:
+
+* `/swagger.json`: return OpenAPI specification file in json format
+* `/swagger-ui`: swagger UI configured to hit OpenAPI json file
+
+This come with a very simple extension that allow you to override basic settings of APISpec using your `config.py` file:
+
+* `APISPEC_TITLE`: title for your spec, default to `{{cookiecutter.project_name}}`
+* `APISPEC_VERSION`: version of your API, default to `1.0.0`
+* `OPENAPI_VERSION`: OpenAPI version of your spec, default to `3.0.2`
+* `SWAGGER_JSON_URL`: Url for your JSON specifications, default to `/swagger.json`
+* `SWAGGER_UI_URL`: Url for swagger-ui, default to `/swagger-ui`
+* `SWAGGER_URL_PREFIX`: URL prefix to use for swagger blueprint, default to `None`
+
 ## Changelog
+
+### 08/2019
+
+* Added apispec dependencies
+* Registered `users` endpoints into swagger
+* New `apispec` extension
+* Added two new routes `/swagger.json` and `/swagger-ui` (configurable urls)
+* Added swagger html template
+* Add travis file
 
 ### 26/04/2019
 

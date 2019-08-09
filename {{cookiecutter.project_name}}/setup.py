@@ -1,7 +1,7 @@
+import os
 from setuptools import setup, find_packages
 
 __version__ = '0.1'
-
 
 setup(
     name='{{cookiecutter.app_name}}',
@@ -16,7 +16,9 @@ setup(
         'flask-marshmallow',
         'marshmallow-sqlalchemy',
         'python-dotenv',
-        'passlib'
+        'passlib',
+        'apispec[yaml]',
+        'apispec-webframeworks',
     ],
     entry_points={
         'console_scripts': [
