@@ -9,7 +9,7 @@ from flask_jwt_extended import (
 )
 
 from {{cookiecutter.app_name}}.models import User
-from {{cookiecutter.app_name}}.extensions import pwd_context, jwt
+from {{cookiecutter.app_name}}.extensions import pwd_context, jwt, apispec
 from {{cookiecutter.app_name}}.auth.helpers import (
     revoke_token,
     is_token_revoked,
@@ -22,7 +22,42 @@ blueprint = Blueprint('auth', __name__, url_prefix='/auth')
 
 @blueprint.route('/login', methods=['POST'])
 def login():
-    """Authenticate user and return token
+    """Authenticate user and return tokens
+
+    ---
+    post:
+      tags:
+        - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: myuser
+                  required: true
+                password:
+                  type: string
+                  example: P4$$w0rd!
+                  required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    example: myaccesstoken
+                  refresh_token:
+                    type: string
+                    example: myrefreshtoken
+        400:
+          description: bad request
+      security: []
     """
     if not request.is_json:
         return jsonify({"msg": "Missing JSON in request"}), 400
@@ -51,6 +86,32 @@ def login():
 @blueprint.route('/refresh', methods=['POST'])
 @jwt_refresh_token_required
 def refresh():
+    """Get an access token from a refresh token
+
+    ---
+    post:
+      tags:
+        - auth
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          description: valid refresh token
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    example: myaccesstoken
+        400:
+          description: bad request
+        401:
+          description: unauthorized
+    """
     current_user = get_jwt_identity()
     access_token = create_access_token(identity=current_user)
     ret = {
@@ -63,6 +124,27 @@ def refresh():
 @blueprint.route('/revoke_access', methods=['DELETE'])
 @jwt_required
 def revoke_access_token():
+    """Revoke an access token
+
+    ---
+    delete:
+      tags:
+        - auth
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: token revoked
+        400:
+          description: bad request
+        401:
+          description: unauthorized
+    """
     jti = get_raw_jwt()['jti']
     user_identity = get_jwt_identity()
     revoke_token(jti, user_identity)
@@ -72,6 +154,27 @@ def revoke_access_token():
 @blueprint.route('/revoke_refresh', methods=['DELETE'])
 @jwt_refresh_token_required
 def revoke_refresh_token():
+    """Revoke a refresh token, used mainly for logout
+
+    ---
+    delete:
+      tags:
+        - auth
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: token revoked
+        400:
+          description: bad request
+        401:
+          description: unauthorized
+    """
     jti = get_raw_jwt()['jti']
     user_identity = get_jwt_identity()
     revoke_token(jti, user_identity)
@@ -86,3 +189,11 @@ def user_loader_callback(identity):
 @jwt.token_in_blacklist_loader
 def check_if_token_revoked(decoded_token):
     return is_token_revoked(decoded_token)
+
+
+@blueprint.before_app_first_request
+def register_views():
+    apispec.spec.path(view=login, app=app)
+    apispec.spec.path(view=refresh, app=app)
+    apispec.spec.path(view=revoke_access_token, app=app)
+    apispec.spec.path(view=revoke_refresh_token, app=app)

@@ -1,0 +1,16 @@
+language: python
+matrix:
+  include:
+    - name: "python 3.5"
+      python: 3.5
+      env: TOXENV=py35
+    - name: "python 3.6"
+      python: 3.6
+      env: TOXENV=py36
+    - name: "python 3.7"
+
+before_install:
+  - "pip3 install --upgrade pip cookiecutter"
+  - "cookiecutter . --no-input"
+install: "pip3 install tox"
+script: "tox -c restful_api/tox.ini"
