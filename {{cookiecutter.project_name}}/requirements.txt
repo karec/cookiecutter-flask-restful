@@ -1,3 +1,4 @@
+marshmallow<3
 flask
 flask-restful
 flask-migrate
