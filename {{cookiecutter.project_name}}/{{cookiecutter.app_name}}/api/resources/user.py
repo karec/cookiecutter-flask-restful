@@ -39,6 +39,8 @@ class UserResource(Resource):
                   user: UserSchema
         404:
           description: user does not exists
+      security:
+        - jwt: []  
     put:
       tags:
         - api
@@ -65,6 +67,8 @@ class UserResource(Resource):
                   user: UserSchema
         404:
           description: user does not exists
+      security:
+        - jwt: []           
     delete:
       tags:
         - api
@@ -85,6 +89,8 @@ class UserResource(Resource):
                     example: user deleted
         404:
           description: user does not exists
+      security:
+        - jwt: []           
     """
     method_decorators = [jwt_required]
 
@@ -132,6 +138,8 @@ class UserList(Resource):
                         type: array
                         items:
                           $ref: '#/components/schemas/UserSchema'
+      security:
+        - jwt: []                           
     post:
       tags:
         - api
@@ -151,6 +159,8 @@ class UserList(Resource):
                     type: string
                     example: user created
                   user: UserSchema
+      security:
+        - jwt: []                   
     """
     method_decorators = [jwt_required]
 
