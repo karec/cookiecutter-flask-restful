@@ -1,5 +1,6 @@
 {
     "project_name": "restful_api",
     "app_name": "myapi",
+    "python_version": ["3.6", "3.7"],
     "use_celery": ["no", "yes"]
 }
