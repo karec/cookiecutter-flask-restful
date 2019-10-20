@@ -1,4 +1,4 @@
-.PHONY: init build run db-migrate
+.PHONY: init build run db-migrate test tox
 
 init: build run db-migrate
 	docker-compose exec web {{cookiecutter.app_name}} init
@@ -11,3 +11,7 @@ run:
 
 db-migrate:
 	docker-compose exec web {{cookiecutter.app_name}} db migrate
+
+test:
+tox:
+	docker-compose run web tox -e {{ cookiecutter.tox_python_env }}
