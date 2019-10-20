@@ -1,0 +1,9 @@
+default_context:
+    project_name: "{{ cookiecutter.project_name }}"
+    app_name: "{{ cookiecutter.app_name }}"
+    python_version: "{{ cookiecutter.python_version }}"
+    admin_user_username: "admin"
+    admin_user_email: "admin@brightedge.com"
+    admin_user_password: "admin"
+    use_celery: "{{ cookiecutter.use_celery }}"
+    wsgi_server: "{{ cookiecutter.wsgi_server }}"
