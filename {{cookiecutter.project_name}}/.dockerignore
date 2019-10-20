@@ -1,3 +1,4 @@
 .flaskenv
 Dockerfile
+Makefile
 docker-compose.yml
