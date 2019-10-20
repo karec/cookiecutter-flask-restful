@@ -1,3 +1,10 @@
+{%- if cookiecutter.wsgi_server == "uwsgi" -%}
+{% set web_command = "uwsgi --http 0.0.0.0:5000 --module " + cookiecutter.app_name + ".wsgi:app" %}
+{%- elif cookiecutter.wsgi_server == "gunicorn" -%}
+{% set web_command = "gunicorn -b 0.0.0.0:5000 " + cookiecutter.app_name + ".wsgi:app" %}
+{%- else -%}
+{% set web_command = cookiecutter.app_name + " run -h 0.0.0.0" %}
+{%- endif -%}
 # WARNING: this file is not suitable for production, please use with caution
 version: '3'
 
@@ -5,7 +12,7 @@ services:
   web:
     image: {{cookiecutter.app_name}}
     build: .
-    command: {{cookiecutter.app_name}} run -h 0.0.0.0
+    command: {{web_command}}
     env_file:
       - ./.flaskenv
     environment:
