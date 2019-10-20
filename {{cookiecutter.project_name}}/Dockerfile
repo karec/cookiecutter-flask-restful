@@ -12,9 +12,7 @@ RUN mkdir /code
 WORKDIR /code
 
 COPY . /code/
-RUN pip install -r requirements.txt{% if cookiecutter.use_celery == "yes" %}
-# needed for docker-compose file that use redis as result-backend
-RUN pip install celery[redis]{% endif %}
+RUN pip install -r requirements.txt
 RUN pip install -e .
 
 EXPOSE 5000
