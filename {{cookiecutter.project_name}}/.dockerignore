@@ -1,1 +1,3 @@
 .flaskenv
+Dockerfile
+docker-compose.yml
