@@ -11,8 +11,12 @@ FROM python:{{ cookiecutter.python_version }}
 RUN mkdir /code
 WORKDIR /code
 
-COPY . /code/
+COPY requirements.txt setup.py tox.ini ./
 RUN pip install -r requirements.txt
 RUN pip install -e .
+
+COPY {{ cookiecutter.app_name }} {{ cookiecutter.app_name }}/
+COPY migrations migrations/
+COPY tests tests/
 
 EXPOSE 5000
