@@ -17,6 +17,5 @@ RUN pip install -e .
 
 COPY {{ cookiecutter.app_name }} {{ cookiecutter.app_name }}/
 COPY migrations migrations/
-COPY tests tests/
 
 EXPOSE 5000

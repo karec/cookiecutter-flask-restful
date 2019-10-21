@@ -14,4 +14,4 @@ db-migrate:
 
 test:
 tox:
-	docker-compose run web tox -e {{ cookiecutter.tox_python_env }}
+	docker-compose run -v $(PWD)/tests:/code/tests:ro web tox -e {{ cookiecutter.tox_python_env }}
