@@ -1,13 +1,12 @@
 language: python
 matrix:
   include:
-    - name: "python 3.5"
-      python: 3.5
-      env: TOXENV=py35
     - name: "python 3.6"
       python: 3.6
       env: TOXENV=py36
     - name: "python 3.7"
+      python: 3.7
+      env: TOXENV=py37
 
 before_install:
   - "pip3 install --upgrade pip cookiecutter"
