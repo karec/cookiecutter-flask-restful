@@ -140,9 +140,15 @@ pip install pytest pytest-runner pytest-flask pytest-factoryboy factory_boy
 pytest
 ```
 
+With docker-compose and the Makefile
+```bash
+make tests
+```
+
 **WARNING**: you will need to set env variables
 
-### Running with gunicorn
+### Installing a wsgi server
+#### Running with gunicorn
 
 This project provide a simple wsgi entry point to run gunicorn or uwsgi for example.
 
@@ -155,7 +161,9 @@ gunicorn myapi.wsgi:app
 
 And that's it ! Gunicorn is running on port 8000
 
-### Running with uwsgi
+If you chose gunicorn as your wsgi server, the proper commands should be in your dokcer-compose file.
+
+#### Running with uwsgi
 
 Pretty much the same as gunicorn here
 
@@ -166,6 +174,7 @@ uwsgi --http 127.0.0.1:5000 --module myapi.wsgi:app
 
 And that's it ! Uwsgi is running on port 5000
 
+If you chose uwsgi as your wsgi server, the proper commands should be in your dokcer-compose file.
 
 ### Using Flask CLI
 
@@ -247,6 +256,38 @@ With compose
 docker-compose up
 ...
 docker exec -it <container_id> myapi init
+```
+
+With docker-compose and the Makefile
+```bash
+make init
+```
+
+## Makefile usage
+
+Initizalize the environment
+```bash
+make init
+```
+
+Build the containers
+```bash
+make build
+```
+
+Run the containers
+```bash
+make run
+```
+
+Run database migrations
+```bash
+make db-migrate
+```
+
+Run tests
+```bash
+make test
 ```
 
 ## Using APISpec and Swagger
