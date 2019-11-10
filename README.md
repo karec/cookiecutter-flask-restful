@@ -161,7 +161,7 @@ gunicorn myapi.wsgi:app
 
 And that's it ! Gunicorn is running on port 8000
 
-If you chose gunicorn as your wsgi server, the proper commands should be in your dokcer-compose file.
+If you chose gunicorn as your wsgi server, the proper commands should be in your docker-compose file.
 
 #### Running with uwsgi
 
@@ -174,7 +174,7 @@ uwsgi --http 127.0.0.1:5000 --module myapi.wsgi:app
 
 And that's it ! Uwsgi is running on port 5000
 
-If you chose uwsgi as your wsgi server, the proper commands should be in your dokcer-compose file.
+If you chose uwsgi as your wsgi server, the proper commands should be in your docker-compose file.
 
 ### Using Flask CLI
 
