@@ -6,15 +6,16 @@
 # for celery: docker run --env-file=.flaskenv image celery worker -A myapi.celery_app:app
 #
 # note that celery will require a running broker and result backend
-FROM python:3.7
+FROM python:{{ cookiecutter.python_version }}
 
 RUN mkdir /code
 WORKDIR /code
 
-COPY . /code/
-RUN pip install -r requirements.txt{% if cookiecutter.use_celery == "yes" %}
-# needed for docker-compose file that use redis as result-backend
-RUN pip install celery[redis]{% endif %}
+COPY requirements.txt setup.py tox.ini ./
+RUN pip install -r requirements.txt
 RUN pip install -e .
+
+COPY {{ cookiecutter.app_name }} {{ cookiecutter.app_name }}/
+COPY migrations migrations/
 
 EXPOSE 5000

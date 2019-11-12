@@ -1,5 +1,11 @@
 {
     "project_name": "restful_api",
     "app_name": "myapi",
-    "use_celery": ["no", "yes"]
+    "python_version": ["3.6", "3.7"],
+    "tox_python_env": "py{{ cookiecutter.python_version|replace('.','') }}",
+    "use_celery": ["no", "yes"],
+    "admin_user_username": "admin",
+    "admin_user_email": "admin@mail.com",
+    "admin_user_password": "admin",
+    "wsgi_server": ["none", "uwsgi", "gunicorn"]
 }
