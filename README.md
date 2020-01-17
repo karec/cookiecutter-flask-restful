@@ -38,6 +38,19 @@ Used packages :
 
 ## Usage
 
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Authentication](#athentication)
+* [Running tests](#running-tests)
+* [WSGI Server](#installing-a-wsgi-server)
+* [Flask CLI](#using-flask-cli)
+* [Using Celery](#using-celery)
+* [Using Docker](#using-docker)
+* [Makefile](#makefile-usage)
+* [APISpec and swagger](#using-apispec-and-swagger)
+* [Changelog](#changelog)
+
+
 ### Installation
 
 For the example, let's say you named your app `myapi` and your project `myproject`
@@ -307,6 +320,15 @@ This come with a very simple extension that allow you to override basic settings
 * `SWAGGER_URL_PREFIX`: URL prefix to use for swagger blueprint, default to `None`
 
 ## Changelog
+
+### 17/01/2020
+
+* Added python 3.8 support
+* Upgraded to marshmallow 3
+* Added `lint` and `tests` envs to tox
+* Added black support
+* Improved travis tests
+* Various cleanup
 
 ### 08/2019
 
