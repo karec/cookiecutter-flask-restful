@@ -25,12 +25,7 @@ def init():
     click.echo("done")
 
     click.echo("create user")
-    user = User(
-        username="{{cookiecutter.admin_user_username}}",
-        email="{{cookiecutter.admin_user_email}}",
-        password="{{cookiecutter.admin_user_password}}",
-        active=True
-    )
+    user = User(username="{{cookiecutter.admin_user_username}}", email="{{cookiecutter.admin_user_email}}", password="{{cookiecutter.admin_user_password}}", active=True)
     db.session.add(user)
     db.session.commit()
     click.echo("created user admin")

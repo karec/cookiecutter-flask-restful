@@ -1,6 +1,4 @@
-from . import example
+from {{cookiecutter.app_name}}.tasks import example
 
 
-__all__ = [
-    'example'
-]
+__all__ = ["example"]

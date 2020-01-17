@@ -1,5 +1,3 @@
-from . import views
+from {{cookiecutter.app_name}}.auth import views
 
-__all__ = [
-    'views'
-]
+__all__ = ["views"]

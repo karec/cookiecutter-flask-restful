@@ -8,11 +8,11 @@ from {{cookiecutter.app_name}}.extensions import db, jwt, migrate, apispec
 def create_app(testing=False, cli=False):
     """Application factory, used to create application
     """
-    app = Flask('{{cookiecutter.app_name}}')
-    app.config.from_object('{{cookiecutter.app_name}}.config')
+    app = Flask("{{cookiecutter.app_name}}")
+    app.config.from_object("{{cookiecutter.app_name}}.config")
 
     if testing is True:
-        app.config['TESTING'] = True
+        app.config["TESTING"] = True
 
     configure_extensions(app, cli)
     configure_apispec(app)
@@ -38,19 +38,20 @@ def configure_apispec(app):
     """Configure APISpec for swagger support
     """
     apispec.init_app(app, security=[{"jwt": []}])
-    apispec.spec.components.security_scheme("jwt", {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT",
-    })
+    apispec.spec.components.security_scheme(
+        "jwt", {"type": "http", "scheme": "bearer","bearerFormat": "JWT"}
+    )
     apispec.spec.components.schema(
-        "PaginatedResult", {
+        "PaginatedResult",
+        {
             "properties": {
                 "total": {"type": "integer"},
                 "pages": {"type": "integer"},
                 "next": {"type": "string"},
                 "prev": {"type": "string"},
-            }})
+            }
+        },
+    )
 
 
 def register_blueprints(app):
@@ -63,8 +64,8 @@ def register_blueprints(app):
 
 def init_celery(app=None):
     app = app or create_app()
-    celery.conf.broker_url = app.config['CELERY_BROKER_URL']
-    celery.conf.result_backend = app.config['CELERY_RESULT_BACKEND']
+    celery.conf.broker_url = app.config["CELERY_BROKER_URL"]
+    celery.conf.result_backend = app.config["CELERY_RESULT_BACKEND"]
     celery.conf.update(app.config)
 
     class ContextTask(celery.Task):

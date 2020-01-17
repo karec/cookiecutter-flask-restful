@@ -86,6 +86,7 @@ class UserResource(Resource):
         404:
           description: user does not exists
     """
+
     method_decorators = [jwt_required]
 
     def get(self, user_id):
@@ -152,6 +153,7 @@ class UserList(Resource):
                     example: user created
                   user: UserSchema
     """
+
     method_decorators = [jwt_required]
 
     def get(self):

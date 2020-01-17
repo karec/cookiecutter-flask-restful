@@ -1,7 +1,4 @@
-from .user import UserResource, UserList
+from {{cookiecutter.app_name}}.api.resources.user import UserResource, UserList
 
 
-__all__ = [
-    'UserResource',
-    'UserList'
-]
+__all__ = ["UserResource", "UserList"]
