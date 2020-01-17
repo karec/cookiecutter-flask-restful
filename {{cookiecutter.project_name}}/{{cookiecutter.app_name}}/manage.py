@@ -20,6 +20,7 @@ def init():
     """
     from {{cookiecutter.app_name}}.extensions import db
     from {{cookiecutter.app_name}}.models import User
+
     click.echo("create database")
     db.create_all()
     click.echo("done")

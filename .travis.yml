@@ -7,9 +7,14 @@ matrix:
     - name: "python 3.7"
       python: 3.7
       env: TOXENV=py37
+    - name: "python 3.8"
+      env: TOXENV=py38
+
+services:
+  - rabbitmq
 
 before_install:
   - "pip3 install --upgrade pip cookiecutter"
-  - "cookiecutter . --no-input"
+  - "cookiecutter . --no-input use_celery=yes"
 install: "pip3 install tox"
 script: "tox -c restful_api/tox.ini"

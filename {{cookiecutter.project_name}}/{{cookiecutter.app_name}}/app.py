@@ -39,7 +39,7 @@ def configure_apispec(app):
     """
     apispec.init_app(app, security=[{"jwt": []}])
     apispec.spec.components.security_scheme(
-        "jwt", {"type": "http", "scheme": "bearer","bearerFormat": "JWT"}
+        "jwt", {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"}
     )
     apispec.spec.components.schema(
         "PaginatedResult",
@@ -70,6 +70,7 @@ def init_celery(app=None):
 
     class ContextTask(celery.Task):
         """Make celery tasks work with Flask app context"""
+
         def __call__(self, *args, **kwargs):
             with app.app_context():
                 return self.run(*args, **kwargs)

@@ -16,8 +16,6 @@ def celery_app(celery_app, app):
 
 @pytest.fixture(scope="session")
 def celery_worker_pool():
-    """Use prefork because threading worker make pytest hang at the end of tests
-    """
     return "prefork"
 
 

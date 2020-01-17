@@ -10,11 +10,7 @@ from flask_jwt_extended import (
 
 from {{cookiecutter.app_name}}.models import User
 from {{cookiecutter.app_name}}.extensions import pwd_context, jwt, apispec
-from {{cookiecutter.app_name}}.auth.helpers import (
-    revoke_token,
-    is_token_revoked,
-    add_token_to_database
-)
+from {{cookiecutter.app_name}}.auth.helpers import revoke_token, is_token_revoked, add_token_to_database
 
 
 blueprint = Blueprint("auth", __name__, url_prefix="/auth")
