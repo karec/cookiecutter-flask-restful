@@ -38,6 +38,19 @@ Used packages :
 
 ## Usage
 
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Authentication](#athentication)
+* [Running tests](#running-tests)
+* [WSGI Server](#installing-a-wsgi-server)
+* [Flask CLI](#using-flask-cli)
+* [Using Celery](#using-celery)
+* [Using Docker](#using-docker)
+* [Makefile](#makefile-usage)
+* [APISpec and swagger](#using-apispec-and-swagger)
+* [Changelog](#changelog)
+
+
 ### Installation
 
 For the example, let's say you named your app `myapi` and your project `myproject`
@@ -53,6 +66,7 @@ pip install -e .
 You have now access to cli commands and you can init your project
 
 ```
+myapi db upgrade
 myapi init
 ```
 
@@ -280,9 +294,14 @@ Run the containers
 make run
 ```
 
-Run database migrations
+Create new database migration
 ```bash
 make db-migrate
+```
+
+Apply database migrations
+```bash
+make db-upgrade
 ```
 
 Run tests
@@ -307,6 +326,19 @@ This come with a very simple extension that allow you to override basic settings
 * `SWAGGER_URL_PREFIX`: URL prefix to use for swagger blueprint, default to `None`
 
 ## Changelog
+
+### 18/01/2020
+
+* Added python 3.8 support
+* Upgraded to marshmallow 3
+* Added `lint` and `tests` envs to tox
+* Added black support
+* Improved travis tests
+* Updated Makefile to handle tests with celery
+* Updated tox to handle env variables for celery when runing tests
+* Added initial db migration instead of relying on `db.create_all()`
+* Added new step to create database in README
+* Various cleanup
 
 ### 08/2019
 

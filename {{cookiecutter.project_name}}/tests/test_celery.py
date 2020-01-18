@@ -14,6 +14,11 @@ def celery_app(celery_app, app):
     yield celery_app
 
 
+@pytest.fixture(scope="session")
+def celery_worker_pool():
+    return "prefork"
+
+
 def test_example(celery_app, celery_worker):
     """Simply test our dummy task using celery"""
     res = dummy_task.delay()

@@ -86,23 +86,22 @@ class UserResource(Resource):
         404:
           description: user does not exists
     """
+
     method_decorators = [jwt_required]
 
     def get(self, user_id):
         schema = UserSchema()
         user = User.query.get_or_404(user_id)
-        return {"user": schema.dump(user).data}
+        return {"user": schema.dump(user)}
 
     def put(self, user_id):
         schema = UserSchema(partial=True)
         user = User.query.get_or_404(user_id)
-        user, errors = schema.load(request.json, instance=user)
-        if errors:
-            return errors, 422
+        user = schema.load(request.json, instance=user)
 
         db.session.commit()
 
-        return {"msg": "user updated", "user": schema.dump(user).data}
+        return {"msg": "user updated", "user": schema.dump(user)}
 
     def delete(self, user_id):
         user = User.query.get_or_404(user_id)
@@ -152,6 +151,7 @@ class UserList(Resource):
                     example: user created
                   user: UserSchema
     """
+
     method_decorators = [jwt_required]
 
     def get(self):
@@ -161,11 +161,9 @@ class UserList(Resource):
 
     def post(self):
         schema = UserSchema()
-        user, errors = schema.load(request.json)
-        if errors:
-            return errors, 422
+        user = schema.load(request.json)
 
         db.session.add(user)
         db.session.commit()
 
-        return {"msg": "user created", "user": schema.dump(user).data}, 201
+        return {"msg": "user created", "user": schema.dump(user)}, 201
