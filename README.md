@@ -66,6 +66,7 @@ pip install -e .
 You have now access to cli commands and you can init your project
 
 ```
+myapi db upgrade
 myapi init
 ```
 
@@ -293,9 +294,14 @@ Run the containers
 make run
 ```
 
-Run database migrations
+Create new database migration
 ```bash
 make db-migrate
+```
+
+Apply database migrations
+```bash
+make db-upgrade
 ```
 
 Run tests
@@ -321,13 +327,17 @@ This come with a very simple extension that allow you to override basic settings
 
 ## Changelog
 
-### 17/01/2020
+### 18/01/2020
 
 * Added python 3.8 support
 * Upgraded to marshmallow 3
 * Added `lint` and `tests` envs to tox
 * Added black support
 * Improved travis tests
+* Updated Makefile to handle tests with celery
+* Updated tox to handle env variables for celery when runing tests
+* Added initial db migration instead of relying on `db.create_all()`
+* Added new step to create database in README
 * Various cleanup
 
 ### 08/2019
