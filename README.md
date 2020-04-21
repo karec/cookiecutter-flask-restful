@@ -53,9 +53,25 @@ Used packages :
 
 ### Installation
 
-For the example, let's say you named your app `myapi` and your project `myproject`
+#### Install cookiecutter
 
-Once project started with cookiecutter, you can install it using pip :
+Make sure you have cookiecutter installed in your local machine.
+
+You can install it using this command : `pip install cookiecutter`
+
+#### Create your project
+
+Starting a new project is as easy as running this command at the command line. No need to create a directory first, the cookiecutter will do it for you.
+
+To create a project run the following command and follow the prompt
+
+`cookiecutter https://github.com/karec/cookiecutter-flask-restful`
+
+#### Install project requirements
+
+Let's say you named your app `myapi` and your project `myproject`
+
+You can install it using pip :
 
 ```
 cd myproject
