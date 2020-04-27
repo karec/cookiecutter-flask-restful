@@ -4,15 +4,15 @@ from marshmallow import ValidationError
 
 from {{cookiecutter.app_name}}.extensions import apispec
 from {{cookiecutter.app_name}}.api.resources import UserResource, UserList
-from {{cookiecutter.app_name}}.api.resources.user import UserSchema
+from {{cookiecutter.app_name}}.api.schemas.user import UserSchema
 
 
 blueprint = Blueprint("api", __name__, url_prefix="/api/v1")
 api = Api(blueprint)
 
 
-api.add_resource(UserResource, "/users/<int:user_id>")
-api.add_resource(UserList, "/users")
+api.add_resource(UserResource, "/users/<int:user_id>", endpoint="user_by_id")
+api.add_resource(UserList, "/users", endpoint='users')
 
 
 @blueprint.before_app_first_request

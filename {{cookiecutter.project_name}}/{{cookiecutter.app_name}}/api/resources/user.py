@@ -1,20 +1,10 @@
 from flask import request
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
-
+from {{cookiecutter.app_name}}.api.schemas.user import UserSchema
 from {{cookiecutter.app_name}}.models import User
-from {{cookiecutter.app_name}}.extensions import ma, db
+from {{cookiecutter.app_name}}.extensions import db
 from {{cookiecutter.app_name}}.commons.pagination import paginate
-
-
-class UserSchema(ma.ModelSchema):
-
-    id = ma.Int(dump_only=True)
-    password = ma.String(load_only=True, required=True)
-
-    class Meta:
-        model = User
-        sqla_session = db.session
 
 
 class UserResource(Resource):

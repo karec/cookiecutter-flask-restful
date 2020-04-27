@@ -87,3 +87,9 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# the generated project
+.restful_api/
+
+# vscode stuff
+.vscode/
