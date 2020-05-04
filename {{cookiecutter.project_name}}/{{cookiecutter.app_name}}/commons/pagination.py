@@ -10,7 +10,7 @@ def paginate(query, schema):
     page = request.args.get("page", DEFAULT_PAGE_NUMBER)
     per_page = request.args.get("page_size", DEFAULT_PAGE_SIZE)
     page_obj = query.paginate(page=page, per_page=per_page)
-    next = url_for(
+    next_ = url_for(
         request.endpoint,
         page=page_obj.next_num if page_obj.has_next else page_obj.page,
         per_page=per_page,
@@ -26,7 +26,7 @@ def paginate(query, schema):
     return {
         "total": page_obj.total,
         "pages": page_obj.pages,
-        "next": next,
+        "next": next_,
         "prev": prev,
         "results": schema.dump(page_obj.items),
     }
