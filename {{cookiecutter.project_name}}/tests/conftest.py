@@ -1,5 +1,6 @@
 import json
 import pytest
+from dotenv import load_dotenv
 
 from {{cookiecutter.app_name}}.models import User
 from {{cookiecutter.app_name}}.app import create_app
@@ -10,8 +11,10 @@ from tests.factories import UserFactory
 
 register(UserFactory)
 
-@pytest.fixture
+
+@pytest.fixture(scope="session")
 def app():
+    load_dotenv(".testenv")
     app = create_app(testing=True)
     return app
 
