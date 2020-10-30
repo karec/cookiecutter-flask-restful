@@ -2,5 +2,5 @@ SECRET_KEY=testing
 DATABASE_URI=sqlite:///:memory:
 {%- if cookiecutter.use_celery == "yes" %}
 CELERY_BROKER_URL=amqp://guest:guest@localhost/
-CELERY_RESULT_BACKEND_URL=amqp://guest:guest@localhost/
+CELERY_RESULT_BACKEND_URL=rpc://
 {%- endif %}

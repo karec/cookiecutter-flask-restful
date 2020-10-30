@@ -177,7 +177,7 @@ tox -e test
 If you want to run pytest manually without using tox you'll need to install some dependencies before
 
 ```
-pip install pytest pytest-runner pytest-flask pytest-factoryboy factory_boy
+pip install pytest pytest-runner pytest-flask pytest-factoryboy pytest-celery factory_boy
 ```
 
 Then you can invoke pytest

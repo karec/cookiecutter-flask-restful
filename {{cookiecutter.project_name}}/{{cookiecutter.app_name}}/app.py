@@ -60,9 +60,7 @@ def register_blueprints(app):
 
 def init_celery(app=None):
     app = app or create_app()
-    celery.conf.broker_url = app.config["CELERY_BROKER_URL"]
-    celery.conf.result_backend = app.config["CELERY_RESULT_BACKEND"]
-    celery.conf.update(app.config)
+    celery.conf.update(app.config.get("CELERY", {}))
 
     class ContextTask(celery.Task):
         """Make celery tasks work with Flask app context"""
