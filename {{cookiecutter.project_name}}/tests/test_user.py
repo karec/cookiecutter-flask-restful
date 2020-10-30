@@ -1,4 +1,6 @@
 from flask import url_for
+
+from {{cookiecutter.app_name}}.extensions import pwd_context
 from {{cookiecutter.app_name}}.models import User
 
 
@@ -31,7 +33,7 @@ def test_put_user(client, db, user, admin_headers):
     db.session.add(user)
     db.session.commit()
 
-    data = {"username": "updated"}
+    data = {"username": "updated", "password": "new_password"}
 
     user_url = url_for('api.user_by_id', user_id=user.id)
     # test update user
@@ -42,6 +44,9 @@ def test_put_user(client, db, user, admin_headers):
     assert data["username"] == "updated"
     assert data["email"] == user.email
     assert data["active"] == user.active
+
+    db.session.refresh(user)
+    assert pwd_context.verify("new_password", user.password)
 
 
 def test_delete_user(client, db, user, admin_headers):
