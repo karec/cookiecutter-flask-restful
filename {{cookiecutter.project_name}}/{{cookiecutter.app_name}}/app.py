@@ -6,8 +6,7 @@ from {{cookiecutter.app_name}}.extensions import db, jwt, migrate, apispec
 
 
 def create_app(testing=False, cli=False):
-    """Application factory, used to create application
-    """
+    """Application factory, used to create application"""
     app = Flask("{{cookiecutter.app_name}}")
     app.config.from_object("{{cookiecutter.app_name}}.config")
 
@@ -25,8 +24,7 @@ def create_app(testing=False, cli=False):
 
 
 def configure_extensions(app, cli):
-    """configure flask extensions
-    """
+    """configure flask extensions"""
     db.init_app(app)
     jwt.init_app(app)
 
@@ -35,8 +33,7 @@ def configure_extensions(app, cli):
 
 
 def configure_apispec(app):
-    """Configure APISpec for swagger support
-    """
+    """Configure APISpec for swagger support"""
     apispec.init_app(app, security=[{"jwt": []}])
     apispec.spec.components.security_scheme(
         "jwt", {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"}
@@ -55,8 +52,7 @@ def configure_apispec(app):
 
 
 def register_blueprints(app):
-    """register all blueprints for application
-    """
+    """register all blueprints for application"""
     app.register_blueprint(auth.views.blueprint)
     app.register_blueprint(api.views.blueprint)
 {%- if cookiecutter.use_celery == "yes" %}

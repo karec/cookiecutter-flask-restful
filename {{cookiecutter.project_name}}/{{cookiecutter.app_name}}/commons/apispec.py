@@ -6,8 +6,7 @@ from apispec_webframeworks.flask import FlaskPlugin
 
 
 class FlaskRestfulPlugin(FlaskPlugin):
-    """Small plugin override to handle flask-restful resources
-    """
+    """Small plugin override to handle flask-restful resources"""
 
     @staticmethod
     def _rule_for_view(view, app=None):
@@ -30,8 +29,7 @@ class FlaskRestfulPlugin(FlaskPlugin):
 
 
 class APISpecExt:
-    """Very simple and small extension to use apispec with this API as a flask extension
-    """
+    """Very simple and small extension to use apispec with this API as a flask extension"""
 
     def __init__(self, app=None, **kwargs):
         self.spec = None

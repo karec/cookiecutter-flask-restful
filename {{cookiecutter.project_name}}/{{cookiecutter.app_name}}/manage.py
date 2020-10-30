@@ -15,8 +15,7 @@ def cli():
 
 @cli.command("init")
 def init():
-    """Create a new admin user
-    """
+    """Create a new admin user"""
     from {{cookiecutter.app_name}}.extensions import db
     from {{cookiecutter.app_name}}.models import User
 

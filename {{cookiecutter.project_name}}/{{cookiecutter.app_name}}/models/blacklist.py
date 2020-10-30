@@ -18,8 +18,7 @@ from {{cookiecutter.app_name}}.extensions import db
 
 
 class TokenBlacklist(db.Model):
-    """Blacklist representation
-    """
+    """Blacklist representation"""
 
     id = db.Column(db.Integer, primary_key=True)
     jti = db.Column(db.String(36), nullable=False, unique=True)
