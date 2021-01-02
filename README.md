@@ -2,6 +2,8 @@
 
 Cookiecutter template for flask restful, including blueprints, application factory, and more
 
+[![Build Status](https://travis-ci.org/karec/cookiecutter-flask-restful.svg?branch=master)](https://travis-ci.org/karec/cookiecutter-flask-restful)
+
 ## Introduction
 
 This cookie cutter is a very simple boilerplate for starting a REST api using Flask, flask-restful, marshmallow, SQLAlchemy and jwt.
