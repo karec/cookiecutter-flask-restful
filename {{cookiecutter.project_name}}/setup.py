@@ -1,4 +1,5 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages
+from setuptools import setup
 
 __version__ = "0.1"
 
@@ -19,9 +20,5 @@ setup(
         "apispec[yaml]",
         "apispec-webframeworks",
     ],
-    entry_points={
-        "console_scripts": [
-            "{{cookiecutter.app_name}} = {{cookiecutter.app_name}}.manage:cli"
-        ]
-    },
+    entry_points={"flask.commands": ["{{cookiecutter.app_name}} = {{cookiecutter.app_name}}.manage:cli"]},
 )

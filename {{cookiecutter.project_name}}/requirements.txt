@@ -12,7 +12,7 @@ apispec[yaml]
 apispec-webframeworks
 tox
 {%- if cookiecutter.use_celery == "yes" %}
-celery[redis]
+celery[redis]>=5.0.0
 {%- endif %}
 {%- if cookiecutter.wsgi_server == "uwsgi" %}
 uwsgi

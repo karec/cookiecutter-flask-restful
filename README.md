@@ -82,14 +82,15 @@ pip install -e .
 You have now access to cli commands and you can init your project
 
 ```
-myapi db upgrade
-myapi init
+flask db upgrade
+flask myapi init
 ```
 
 To list all commands
 
 ```
-myapi --help
+flask --help
+flask myapi --help
 ```
 
 ### Configuration
@@ -307,7 +308,7 @@ This code will include a dummy task located in `yourproject/yourapp/tasks/exampl
 In your project path, once dependencies are installed, you can just run
 
 ```
-celery worker -A myapi.celery_app:app --loglevel=info
+celery -A myapi.celery_app:app worker --loglevel=info
 ```
 
 If you have updated your configuration for broker / result backend your workers should start and you should see the example task avaible
@@ -367,7 +368,7 @@ With compose
 ```bash
 docker-compose up
 ...
-docker exec -it <container_id> myapi init
+docker exec -it <container_id> flask myapi init
 ```
 
 With docker-compose and the Makefile

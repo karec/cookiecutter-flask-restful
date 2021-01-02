@@ -1,11 +1,15 @@
 from flask import Flask
+from {{cookiecutter.app_name}} import api
+from {{cookiecutter.app_name}} import auth
+from {{cookiecutter.app_name}}.extensions import apispec
+from {{cookiecutter.app_name}}.extensions import db
+from {{cookiecutter.app_name}}.extensions import jwt
+from {{cookiecutter.app_name}}.extensions import migrate
 
-from {{cookiecutter.app_name}} import auth, api
-from {{cookiecutter.app_name}}.extensions import db, jwt, migrate, apispec
 {%- if cookiecutter.use_celery == "yes"%}, celery{% endif%}
 
 
-def create_app(testing=False, cli=False):
+def create_app(testing=False):
     """Application factory, used to create application"""
     app = Flask("{{cookiecutter.app_name}}")
     app.config.from_object("{{cookiecutter.app_name}}.config")
@@ -13,7 +17,7 @@ def create_app(testing=False, cli=False):
     if testing is True:
         app.config["TESTING"] = True
 
-    configure_extensions(app, cli)
+    configure_extensions(app)
     configure_apispec(app)
     register_blueprints(app)
 {%- if cookiecutter.use_celery == "yes" %}
@@ -23,13 +27,11 @@ def create_app(testing=False, cli=False):
     return app
 
 
-def configure_extensions(app, cli):
+def configure_extensions(app):
     """configure flask extensions"""
     db.init_app(app)
     jwt.init_app(app)
-
-    if cli is True:
-        migrate.init_app(app, db)
+    migrate.init_app(app, db)
 
 
 def configure_apispec(app):
