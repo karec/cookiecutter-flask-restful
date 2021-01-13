@@ -1,8 +1,8 @@
 .PHONY: init init-migration build run db-migrate test tox
 
 init:  build run
-	docker-compose exec web {{cookiecutter.app_name}} db upgrade
-	docker-compose exec web {{cookiecutter.app_name}} init
+	docker-compose exec web flask db upgrade
+	docker-compose exec web flask {{cookiecutter.app_name}} init
 	@echo "Init done, containers running"
 
 build:
@@ -12,10 +12,10 @@ run:
 	docker-compose up -d
 
 db-migrate:
-	docker-compose exec web {{cookiecutter.app_name}} db migrate
+	docker-compose exec web flask db migrate
 
 db-upgrade:
-	docker-compose exec web {{cookiecutter.app_name}} db upgrade
+	docker-compose exec web flask db upgrade
 
 test:
 {%- if cookiecutter.use_celery == "yes"%}

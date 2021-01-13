@@ -3,7 +3,7 @@
 {%- elif cookiecutter.wsgi_server == "gunicorn" -%}
 {% set web_command = "gunicorn -b 0.0.0.0:5000 " + cookiecutter.app_name + ".wsgi:app" %}
 {%- else -%}
-{% set web_command = cookiecutter.app_name + " run -h 0.0.0.0" %}
+{% set web_command = "flask run -h 0.0.0.0" %}
 {%- endif -%}
 # WARNING: this file is not suitable for production, please use with caution
 version: '3'
