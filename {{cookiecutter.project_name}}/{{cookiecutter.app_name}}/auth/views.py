@@ -3,9 +3,8 @@ from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
     jwt_required,
-    jwt_refresh_token_required,
     get_jwt_identity,
-    get_raw_jwt,
+    get_jwt,
 )
 
 from {{cookiecutter.app_name}}.models import User
@@ -77,7 +76,7 @@ def login():
 
 
 @blueprint.route("/refresh", methods=["POST"])
-@jwt_refresh_token_required
+@jwt_required(refresh=True)
 def refresh():
     """Get an access token from a refresh token
 
@@ -113,7 +112,7 @@ def refresh():
 
 
 @blueprint.route("/revoke_access", methods=["DELETE"])
-@jwt_required
+@jwt_required()
 def revoke_access_token():
     """Revoke an access token
 
@@ -136,14 +135,14 @@ def revoke_access_token():
         401:
           description: unauthorized
     """
-    jti = get_raw_jwt()["jti"]
+    jti = get_jwt()["jti"]
     user_identity = get_jwt_identity()
     revoke_token(jti, user_identity)
     return jsonify({"message": "token revoked"}), 200
 
 
 @blueprint.route("/revoke_refresh", methods=["DELETE"])
-@jwt_refresh_token_required
+@jwt_required(refresh=True)
 def revoke_refresh_token():
     """Revoke a refresh token, used mainly for logout
 
@@ -166,20 +165,21 @@ def revoke_refresh_token():
         401:
           description: unauthorized
     """
-    jti = get_raw_jwt()["jti"]
+    jti = get_jwt()["jti"]
     user_identity = get_jwt_identity()
     revoke_token(jti, user_identity)
     return jsonify({"message": "token revoked"}), 200
 
 
-@jwt.user_loader_callback_loader
-def user_loader_callback(identity):
+@jwt.user_lookup_loader
+def user_loader_callback(jwt_headers, jwt_payload):
+    identity = jwt_payload["sub"]
     return User.query.get(identity)
 
 
-@jwt.token_in_blacklist_loader
-def check_if_token_revoked(decoded_token):
-    return is_token_revoked(decoded_token)
+@jwt.token_in_blocklist_loader
+def check_if_token_revoked(jwt_headers, jwt_payload):
+    return is_token_revoked(jwt_payload)
 
 
 @blueprint.before_app_first_request

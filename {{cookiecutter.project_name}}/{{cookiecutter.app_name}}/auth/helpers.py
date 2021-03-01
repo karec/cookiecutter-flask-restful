@@ -1,7 +1,7 @@
-"""Various helpers for auth. Mainly about tokens blacklisting
+"""Various helpers for auth. Mainly about tokens blocklisting
 
-heavily inspired by
-https://github.com/vimalloc/flask-jwt-extended/blob/master/examples/database_blacklist/blacklist_helpers.py
+Heavily inspired by
+https://github.com/vimalloc/flask-jwt-extended/blob/master/examples/blocklist_database.py
 """
 from datetime import datetime
 
@@ -9,7 +9,7 @@ from flask_jwt_extended import decode_token
 from sqlalchemy.orm.exc import NoResultFound
 
 from {{cookiecutter.app_name}}.extensions import db
-from {{cookiecutter.app_name}}.models import TokenBlacklist
+from {{cookiecutter.app_name}}.models import TokenBlocklist
 
 
 def add_token_to_database(encoded_token, identity_claim):
@@ -25,7 +25,7 @@ def add_token_to_database(encoded_token, identity_claim):
     expires = datetime.fromtimestamp(decoded_token["exp"])
     revoked = False
 
-    db_token = TokenBlacklist(
+    db_token = TokenBlocklist(
         jti=jti,
         token_type=token_type,
         user_id=user_identity,
@@ -36,16 +36,16 @@ def add_token_to_database(encoded_token, identity_claim):
     db.session.commit()
 
 
-def is_token_revoked(decoded_token):
+def is_token_revoked(jwt_payload):
     """
     Checks if the given token is revoked or not. Because we are adding all the
     tokens that we create into this database, if the token is not present
     in the database we are going to consider it revoked, as we don't know where
     it was created.
     """
-    jti = decoded_token["jti"]
+    jti = jwt_payload["jti"]
     try:
-        token = TokenBlacklist.query.filter_by(jti=jti).one()
+        token = TokenBlocklist.query.filter_by(jti=jti).one()
         return token.revoked
     except NoResultFound:
         return True
@@ -58,7 +58,7 @@ def revoke_token(token_jti, user):
     if token is not found we raise an exception
     """
     try:
-        token = TokenBlacklist.query.filter_by(jti=token_jti, user_id=user).one()
+        token = TokenBlocklist.query.filter_by(jti=token_jti, user_id=user).one()
         token.revoked = True
         db.session.commit()
     except NoResultFound:
