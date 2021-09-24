@@ -2,12 +2,7 @@ import click
 from flask.cli import with_appcontext
 
 
-@click.group()
-def cli():
-    """Main entry point"""
-
-
-@cli.command("init")
+@click.command("init")
 @with_appcontext
 def init():
     """Create a new admin user"""
@@ -19,7 +14,3 @@ def init():
     db.session.add(user)
     db.session.commit()
     click.echo("created user admin")
-
-
-if __name__ == "__main__":
-    cli()
