@@ -49,7 +49,7 @@ Used packages :
 * [Using Celery](#using-celery)
 * [Using Docker](#using-docker)
 * [Makefile](#makefile-usage)
-* [APISpec and swagger](#using-apispec-and-swagger)
+* [APISpec, swagger, and redoc](#using-apispec-swagger-and-redoc)
 * [Changelog](#changelog)
 
 
@@ -85,14 +85,13 @@ You now have access to cli commands and can init your project
 
 ```
 flask db upgrade
-flask myapi init
+flask init
 ```
 
 To list all commands
 
 ```
 flask --help
-flask myapi --help
 ```
 
 ### Configuration
@@ -106,7 +105,7 @@ It's filled by default with following content:
 FLASK_ENV=development
 FLASK_APP="myapp.app:create_app"
 SECRET_KEY=changeme
-DATABASE_URI="sqlite:////tmp/myapp.db"
+DATABASE_URI="sqlite:///myapp.db"
 CELERY_BROKER_URL=amqp://guest:guest@localhost/  # only present when celery is enabled
 CELERY_RESULT_BACKEND_URL=amqp://guest:guest@localhost/  # only present when celery is enabled
 ```
@@ -410,12 +409,14 @@ Run tests inside containers
 make test
 ```
 
-## Using APISpec and Swagger
+## Using APISpec, Swagger, and ReDoc
 
-This boilerplate comes with pre-configured APISpec and swagger endpoints. Using default configuration you have two endpoints avaible:
+This boilerplate comes with pre-configured APISpec and swagger endpoints. Using default configuration you have four endpoints available:
 
 * `/swagger.json`: return OpenAPI specification file in json format
-* `/swagger-ui`: swagger UI configured to hit OpenAPI json file
+* `/swagger-ui`: Swagger UI configured to hit OpenAPI json file
+* `/openapi.yaml`: return OpenAPI specification file in yaml format
+* `/redoc-ui`: ReDoc UI configured to hit OpenAPI yaml file
 
 This come with a very simple extension that allow you to override basic settings of APISpec using your `config.py` file:
 
@@ -424,9 +425,18 @@ This come with a very simple extension that allow you to override basic settings
 * `OPENAPI_VERSION`: OpenAPI version of your spec, default to `3.0.2`
 * `SWAGGER_JSON_URL`: Url for your JSON specifications, default to `/swagger.json`
 * `SWAGGER_UI_URL`: Url for swagger-ui, default to `/swagger-ui`
+* `OPENAPI_YAML_URL`: Url for your YAML specifications, default to `/openapi.yaml`
+* `REDOC_UI_URL`: Url for redoc-ui, default to `/redoc-ui`
 * `SWAGGER_URL_PREFIX`: URL prefix to use for swagger blueprint, default to `None`
 
 ## Changelog
+
+### 9/24/2021
+
+* Fixed CLI to work with Flask 2.0's built-in CLI
+* Added ReDoc UI and YAML OpenAPI Spec routes
+* Updated Swagger UI version to fix previously-distorted version
+* Updated README to reflect new CLI and ReDoc information
 
 ### 6/08/2020
 
