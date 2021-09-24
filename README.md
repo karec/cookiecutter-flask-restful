@@ -81,7 +81,7 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-You have now access to cli commands and you can init your project
+You now have access to cli commands and can init your project
 
 ```
 flask db upgrade
@@ -150,7 +150,7 @@ You can use refresh token to retreive a new access_token using the endpoint `/au
 curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6MSwiaWF0IjoxNTEwMDAwNDQxLCJ0eXBlIjoicmVmcmVzaCIsImp0aSI6IjRmMjgxOTQxLTlmMWYtNGNiNi05YmI1LWI1ZjZhMjRjMmU0ZSIsIm5iZiI6MTUxMDAwMDQ0MSwiZXhwIjoxNTEyNTkyNDQxfQ.SJPsFPgWpZqZpHTc4L5lG_4aEKXVVpLLSW1LO7g4iU0" http://127.0.0.1:5000/auth/refresh
 ```
 
-this will only return a new access token
+This will only return a new access token
 
 ```json
 {

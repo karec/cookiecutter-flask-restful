@@ -93,3 +93,6 @@ ENV/
 
 # vscode stuff
 .vscode/
+
+# pycharm stuff
+.idea/

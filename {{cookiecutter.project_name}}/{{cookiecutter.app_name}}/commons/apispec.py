@@ -43,6 +43,8 @@ class APISpecExt:
         app.config.setdefault("OPENAPI_VERSION", "3.0.2")
         app.config.setdefault("SWAGGER_JSON_URL", "/swagger.json")
         app.config.setdefault("SWAGGER_UI_URL", "/swagger-ui")
+        app.config.setdefault("OPENAPI_YAML_URL", "/openapi.yaml")
+        app.config.setdefault("REDOC_UI_URL", "/redoc-ui")
         app.config.setdefault("SWAGGER_URL_PREFIX", None)
 
         self.spec = APISpec(
@@ -66,6 +68,12 @@ class APISpecExt:
         blueprint.add_url_rule(
             app.config["SWAGGER_UI_URL"], "swagger_ui", self.swagger_ui
         )
+        blueprint.add_url_rule(
+            app.config["OPENAPI_YAML_URL"], "openapi_yaml", self.openapi_yaml
+        )
+        blueprint.add_url_rule(
+            app.config["REDOC_UI_URL"], "redoc_ui", self.redoc_ui
+        )
 
         app.register_blueprint(blueprint)
 
@@ -74,3 +82,9 @@ class APISpecExt:
 
     def swagger_ui(self):
         return render_template("swagger.j2")
+
+    def openapi_yaml(self):
+        return self.spec.to_yaml()
+
+    def redoc_ui(self):
+        return render_template("redoc.j2")
