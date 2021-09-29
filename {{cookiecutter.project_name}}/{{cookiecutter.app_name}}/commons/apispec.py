@@ -84,7 +84,15 @@ class APISpecExt:
         return render_template("swagger.j2")
 
     def openapi_yaml(self):
-        return self.spec.to_yaml()
+        # Manually inject ReDoc's Authentication legend, then remove it
+        self.spec.tag({
+            "name": "authentication",
+            "x-displayName": "Authentication",
+            "description": "<SecurityDefinitions />"
+        })
+        redoc_spec = self.spec.to_yaml()
+        self.spec._tags.pop(0)
+        return redoc_spec
 
     def redoc_ui(self):
         return render_template("redoc.j2")
