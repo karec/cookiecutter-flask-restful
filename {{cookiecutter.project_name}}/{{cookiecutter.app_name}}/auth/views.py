@@ -23,6 +23,8 @@ def login():
     post:
       tags:
         - auth
+      summary: Authenticate a user
+      description: Authenticates a user's credentials and returns tokens
       requestBody:
         content:
           application/json:
@@ -84,6 +86,8 @@ def refresh():
     post:
       tags:
         - auth
+      summary: Get an access token
+      description: Get an access token using a refresh token
       parameters:
         - in: header
           name: Authorization
@@ -120,6 +124,8 @@ def revoke_access_token():
     delete:
       tags:
         - auth
+      summary: Revoke an access token
+      description: Revoke an access token
       responses:
         200:
           content:
@@ -150,6 +156,8 @@ def revoke_refresh_token():
     delete:
       tags:
         - auth
+      summary: Revoke a refresh token
+      description: Revoke a refresh token, used mainly for logout
       responses:
         200:
           content:
