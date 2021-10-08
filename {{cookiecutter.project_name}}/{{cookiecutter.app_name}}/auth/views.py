@@ -87,12 +87,7 @@ def refresh():
       tags:
         - auth
       summary: Get an access token
-      description: Get an access token using a refresh token
-      parameters:
-        - in: header
-          name: Authorization
-          required: true
-          description: valid refresh token
+      description: Get an access token by using a refresh token in the `Authorization` header
       responses:
         200:
           content:
