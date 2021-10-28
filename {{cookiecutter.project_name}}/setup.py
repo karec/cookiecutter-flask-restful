@@ -19,6 +19,5 @@ setup(
         "passlib",
         "apispec[yaml]",
         "apispec-webframeworks",
-    ],
-    entry_points={"flask.commands": ["{{cookiecutter.app_name}} = {{cookiecutter.app_name}}.manage:cli"]},
+    ]
 )

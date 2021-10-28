@@ -211,7 +211,7 @@ make tox
 Running tox with pytest only:
 
 ```bash
-make tests
+make test
 ```
 
 #### Testing Celery
@@ -437,6 +437,13 @@ This come with a very simple extension that allow you to override basic settings
 * `SWAGGER_URL_PREFIX`: URL prefix to use for swagger blueprint, default to `None`
 
 ## Changelog
+
+### 29/10/2021
+
+* Updated readme makefile calls
+* Fixed Makefile
+* Removed entrypoint from setup to use flask default CLI
+* Re-format apispec to fit black specs
 
 ### 9/24/2021
 
