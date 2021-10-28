@@ -84,8 +84,10 @@ pip install -e .
 You now have access to cli commands and can init your project
 
 ```
+flask db init
+flask db migrate
 flask db upgrade
-flask init
+flask init  # creates admin user
 ```
 
 To list all commands
@@ -353,8 +355,8 @@ Note that you still need to init your app on first start, even when using compos
 ```bash
 docker build -t myapp .
 ...
-docker run --env-file=.flaskenv myapp myapi init
-docker run --env-file=.flaskenv -p 5000:5000 myapp myapi run -h 0.0.0.0
+docker run --env-file=.flaskenv myapp init
+docker run --env-file=.flaskenv -p 5000:5000 myapp run -h 0.0.0.0
  * Serving Flask app "myapi.app:create_app" (lazy loading)
  * Environment: development
  * Debug mode: on
@@ -369,7 +371,7 @@ With compose
 ```bash
 docker-compose up
 ...
-docker exec -it <container_id> flask myapi init
+docker exec -it <container_id> flask init
 ```
 
 With docker-compose and the Makefile
@@ -392,6 +394,11 @@ make build
 Run the containers
 ```bash
 make run
+```
+
+Create migrations folder and database
+```bash
+make db-init
 ```
 
 Create new database migration

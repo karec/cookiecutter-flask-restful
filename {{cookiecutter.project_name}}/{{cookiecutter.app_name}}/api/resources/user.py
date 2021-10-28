@@ -14,6 +14,8 @@ class UserResource(Resource):
     get:
       tags:
         - api
+      summary: Get a user
+      description: Get a single user by ID
       parameters:
         - in: path
           name: user_id
@@ -32,6 +34,8 @@ class UserResource(Resource):
     put:
       tags:
         - api
+      summary: Update a user
+      description: Update a single user by ID
       parameters:
         - in: path
           name: user_id
@@ -58,6 +62,8 @@ class UserResource(Resource):
     delete:
       tags:
         - api
+      summary: Delete a user
+      description: Delete a single user by ID
       parameters:
         - in: path
           name: user_id
@@ -108,6 +114,8 @@ class UserList(Resource):
     get:
       tags:
         - api
+      summary: Get a list of users
+      description: Get a list of paginated users
       responses:
         200:
           content:
@@ -124,6 +132,8 @@ class UserList(Resource):
     post:
       tags:
         - api
+      summary: Create a user
+      description: Create a new user
       requestBody:
         content:
           application/json:
