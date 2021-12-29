@@ -7,7 +7,7 @@ from {{cookiecutter.app_name}}.api.schemas import UserSchema
 
 
 blueprint = Blueprint("api", __name__, url_prefix="/api/v1")
-api = Api(blueprint)
+api = Api(blueprint, errors=blueprint.errorhandler)
 
 
 api.add_resource(UserResource, "/users/<int:user_id>", endpoint="user_by_id")
