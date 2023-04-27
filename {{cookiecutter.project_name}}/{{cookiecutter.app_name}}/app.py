@@ -20,8 +20,8 @@ def create_app(testing=False):
 
     configure_extensions(app)
     configure_cli(app)
-    configure_apispec(app)
     register_blueprints(app)
+    configure_apispec(app)
 {%- if cookiecutter.use_celery == "yes" %}
     init_celery(app)
 {%- endif %}
@@ -58,6 +58,9 @@ def configure_apispec(app):
             }
         },
     )
+    with app.app_context():
+        api.views.register_views()
+        auth.views.register_views()
 
 
 def register_blueprints(app):
