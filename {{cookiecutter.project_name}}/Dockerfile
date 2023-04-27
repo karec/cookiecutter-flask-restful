@@ -11,7 +11,7 @@ FROM python:{{ cookiecutter.python_version }}
 RUN mkdir /code
 WORKDIR /code
 
-COPY requirements.txt setup.py tox.ini ./
+COPY requirements.txt pyproject.toml tox.ini ./
 RUN pip install -U pip
 RUN pip install -r requirements.txt
 RUN pip install -e .
